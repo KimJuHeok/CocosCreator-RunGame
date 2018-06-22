@@ -38,7 +38,7 @@ cc.Class({
         this.anim.play("Player_jump");
         this.isJumping = true;
         var jumpLeft = cc.jumpBy(0.3, cc.p(-200,0), 50,1);
-        this.node.runAction(jumpLeft)
+        this.node.runAction(jumpLeft);
      },
      GetIsJumping() {
          return this.isJumping;

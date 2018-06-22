@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "bc1bebee-404d-456c-a758-e0cec3680cc8",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "UI_InGame_게임시작_click": {
+      "ver": "1.0.3",
+      "uuid": "e485c4ce-286f-4689-8a27-8aa217db3dd8",
+      "rawTextureUuid": "bc1bebee-404d-456c-a758-e0cec3680cc8",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": -1,
+      "offsetY": -0.5,
+      "trimX": 3,
+      "trimY": 2,
+      "width": 240,
+      "height": 75,
+      "rawWidth": 248,
+      "rawHeight": 78,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
