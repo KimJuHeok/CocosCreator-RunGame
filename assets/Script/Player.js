@@ -10,8 +10,11 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
      onLoad () {
-         var isJumping = false
+         var isJumping = false;
          this.anim = this.getComponent(cc.Animation);
+         var Collision = cc.director.getCollisionManager();
+         Collision.enabled = true;
+         Collision.enabledDebugDraw = true;
 
          this.anim.on('finished',function(){
              cc.log("end");
@@ -39,7 +42,11 @@ cc.Class({
      },
      GetIsJumping() {
          return this.isJumping;
-     }
+     },
+
+     onCollisionEnter: function (other, self){
+         console.log(other);
+     },
 
 
 
