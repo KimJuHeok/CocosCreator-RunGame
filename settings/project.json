@@ -8,9 +8,24 @@
   },
   "collision-matrix": [
     [
+      true,
+      null,
+      false
+    ],
+    [
+      false,
+      false,
+      true,
       true
     ],
     [
+      false,
+      true,
+      false
+    ],
+    [
+      false,
+      true,
       false,
       false
     ]
@@ -22,7 +37,9 @@
   "fit-width": true,
   "group-list": [
     "default",
-    ""
+    "Platform",
+    "Check",
+    "Player"
   ],
   "simulator-orientation": false,
   "simulator-resolution": {

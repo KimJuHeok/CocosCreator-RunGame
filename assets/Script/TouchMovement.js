@@ -47,7 +47,7 @@ cc.Class({
                 if(IsWorkable) {
                   if(!this.playerScript.GetIsJumping()) {
                       this.playerScript.OnRight();
-                      cc.log("RightSuccess!");
+
                       IsWorkable = false;
                     }
                 }
@@ -59,7 +59,6 @@ cc.Class({
                     if(!this.playerScript.GetIsJumping()) {
                 // Left Swipe
                        this.playerScript.OnLeft();
-                       cc.log("LeftSucces!");
                        IsWorkable = false;
                     }
                 }
