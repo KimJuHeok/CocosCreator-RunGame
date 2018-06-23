@@ -45,7 +45,7 @@ cc.Class({
      },
 
      onCollisionEnter: function (other, self){
-         console.log(other);
+         //console.log(other);
      },
 
 
