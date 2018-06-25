@@ -55,9 +55,9 @@ cc.Class({
             }
             if(XforCheck < Xorigin-100)
             {
+                  // Left Swipe
                 if(IsWorkable){
                     if(!this.playerScript.GetIsJumping()) {
-                // Left Swipe
                        this.playerScript.OnLeft();
                        IsWorkable = false;
                     }

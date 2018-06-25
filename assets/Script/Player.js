@@ -6,18 +6,18 @@ cc.Class({
     properties: {
         jumpLoc:210,
         DrawCollision:false,
-
+        isJumping:false,
+        isOnPlatform:true,
 
     },
 
     // LIFE-CYCLE CALLBACKS:
 
      onLoad () {
-         var isJumping = false;
          this.anim = this.getComponent(cc.Animation);
-         var Collision = cc.director.getCollisionManager();
-         Collision.enabled = true;
-         Collision.enabledDebugDraw = this.DrawCollision;
+         this.Collision = cc.director.getCollisionManager();
+         this.Collision.enabled = true;
+         this.Collision.enabledDebugDraw = this.DrawCollision;
 
          this.anim.on('finished',function(){
              this.isJumping = false;
@@ -47,10 +47,32 @@ cc.Class({
      },
 
      onCollisionEnter: function (other, self){
-         //console.log(other);
+
+        // if(other.node.group === "Platform"){
+        //     this.isOnPlatform = true;
+        // }
+          this.isOnPlatform = true;
+     },
+     onCollisionStay: function (other, self) {
+          this.isOnPlatform = true;
+    },
+
+     CheckGameOver() {
+         if(!this.isOnPlatform)
+         {
+             cc.director.pause();
+         }
+
      },
 
 
 
-    // update (dt) {},
+     update (dt) {
+        this.CheckGameOver();
+
+        if(!this.isJumping)
+        {
+        this.isOnPlatform = false;
+        }
+     },
 });

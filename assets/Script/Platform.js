@@ -12,11 +12,18 @@ cc.Class({
 
     },
     onCollisionEnter:function(other,self){
-        cc.log("entered");
+
+        if(other.node.group === "Check")
+        {
+        }
     },
 
     onCollisionExit: function (other, self) {
-        cc.log("ended");
+
+        if(other.node.group === "Check")
+        {
+            this.node.destroy();
+        }
     },
 
      update (dt) {
