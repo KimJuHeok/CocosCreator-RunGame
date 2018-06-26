@@ -12,15 +12,10 @@ cc.Class({
 
     },
     onCollisionEnter:function(other,self){
-
-        if(other.node.group === "Check")
-        {
-        }
     },
 
     onCollisionExit: function (other, self) {
-
-        if(other.node.group === "Check")
+        if(other.node.group == "Check")
         {
             this.node.destroy();
         }

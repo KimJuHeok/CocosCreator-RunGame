@@ -10,7 +10,7 @@
     [
       true,
       null,
-      false
+      true
     ],
     [
       false,
@@ -19,11 +19,20 @@
       true
     ],
     [
+      true,
+      true,
+      false,
+      null,
+      true
+    ],
+    [
       false,
       true,
+      false,
       false
     ],
     [
+      false,
       false,
       true,
       false,
@@ -39,14 +48,14 @@
     "default",
     "Platform",
     "Check",
-    "Player"
+    "Player",
+    "BackGround"
   ],
   "simulator-orientation": false,
   "simulator-resolution": {
     "height": 640,
     "width": 960
   },
-  "start-scene": "64b4cda6-8ab0-466b-a065-a523a0c313f8",
   "use-customize-simulator": false,
   "use-project-simulator-setting": false
 }

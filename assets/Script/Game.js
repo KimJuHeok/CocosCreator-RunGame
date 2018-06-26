@@ -27,14 +27,14 @@ cc.Class({
     SpawnDrop:function(dt) {
         this.delta += dt;
 
-        if( this.delta < 1.6)
+        if( this.delta < 3.1)
         {
             return;
         }
         this.delta = 0;
 
-        var DropObject_ = cc.instantiate(this.SpawnObject[Math.round(this.getRandom(0,1))]);
-        DropObject_.setPosition(0,600,0);
+        var DropObject_ = cc.instantiate(this.SpawnObject[Math.round(this.getRandom(0,0))]);
+        DropObject_.setPosition(0,1080,0);
         this.SpawnLayer.node.addChild(DropObject_);
     },
 
