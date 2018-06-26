@@ -27,7 +27,7 @@ cc.Class({
         {
             return;
         }
-        var follow = cc.follow(this.target, cc.rect(-300, 0,640*2,960));
+        var follow = cc.follow(this.target, cc.rect(-300, 0,1080*2,1920));
         this.node.runAction(follow);
 
     },

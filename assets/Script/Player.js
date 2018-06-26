@@ -21,14 +21,14 @@ cc.Class({
 
          this.anim.on('finished',function(){
              this.isJumping = false;
-             this.anim.play("Player_idle");
+             this.anim.play("Player_idle_");
          },this);
 
 
      },
 
      OnRight() {
-        this.anim.play("Player_jump");
+        this.anim.play("Player_jump_");
         this.isJumping = true;
 
         var jumpRight = cc.jumpBy(0.3, cc.p(this.jumpLoc,0), 50,1);
@@ -37,7 +37,7 @@ cc.Class({
      },
 
      OnLeft() {
-        this.anim.play("Player_jump");
+        this.anim.play("Player_jump_");
         this.isJumping = true;
         var jumpLeft = cc.jumpBy(0.3, cc.p(-this.jumpLoc,0), 50,1);
         this.node.runAction(jumpLeft);
@@ -60,7 +60,8 @@ cc.Class({
      CheckGameOver() {
          if(!this.isOnPlatform)
          {
-             cc.director.pause();
+             //cc.director.pause();
+             cc.log("Game Over");
          }
 
      },

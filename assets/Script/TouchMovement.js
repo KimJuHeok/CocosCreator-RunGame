@@ -15,8 +15,9 @@ cc.Class({
     properties: {
         Player: {
             default:null,
-            type:cc.Node
-        }
+            type:cc.Node,
+        },
+        PlayerLimit: 0,
         
     },
 
@@ -46,9 +47,11 @@ cc.Class({
                   // Right Swipe\
                 if(IsWorkable) {
                   if(!this.playerScript.GetIsJumping()) {
+                      if(this.PlayerLimit <= 0) {
                       this.playerScript.OnRight();
-
+                      this.PlayerLimit += 1;
                       IsWorkable = false;
+                      }
                     }
                 }
                 
@@ -58,8 +61,11 @@ cc.Class({
                   // Left Swipe
                 if(IsWorkable){
                     if(!this.playerScript.GetIsJumping()) {
+                        if(this.PlayerLimit >= 0) {
                        this.playerScript.OnLeft();
+                       this.PlayerLimit -= 1;
                        IsWorkable = false;
+                        }
                     }
                 }
             }   

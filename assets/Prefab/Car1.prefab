@@ -25,10 +25,13 @@
       },
       {
         "__id__": 4
+      },
+      {
+        "__id__": 5
       }
     ],
     "_prefab": {
-      "__id__": 5
+      "__id__": 6
     },
     "_id": "",
     "_opacity": 255,
@@ -57,14 +60,14 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": -309
+      "y": -300
     },
     "_skewX": 0,
     "_skewY": 0,
     "_localZOrder": 0,
     "_globalZOrder": 0,
     "_opacityModifyRGB": false,
-    "groupIndex": 0
+    "groupIndex": 3
   },
   {
     "__type__": "cc.Sprite",
@@ -75,7 +78,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "b95d56bf-d606-48bc-8466-da6b2d64b9f4"
+      "__uuid__": "acb94aef-8ed4-4517-adcc-56ccbec34e3d"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -108,6 +111,9 @@
     "_clips": [
       {
         "__uuid__": "11109e2e-6fb8-49e8-8942-bd4710d19e68"
+      },
+      {
+        "__uuid__": "f619bcd3-1935-4e3f-86aa-51d920355e90"
       }
     ],
     "playOnLoad": true
@@ -119,7 +125,31 @@
     "node": {
       "__id__": 1
     },
-    "_enabled": true
+    "_enabled": true,
+    "jumpLoc": 210,
+    "DrawCollision": false,
+    "isJumping": false,
+    "isOnPlatform": true
+  },
+  {
+    "__type__": "cc.BoxCollider",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "tag": 0,
+    "_offset": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_size": {
+      "__type__": "cc.Size",
+      "width": 150,
+      "height": 120
+    }
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -129,7 +159,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "c3uiXifQZKNrJWezMhfQ75",
+    "fileId": "b3T8JdWldIiJUKK9B3tvSU",
     "sync": false
   }
 ]

@@ -1,12 +1,12 @@
 {
   "__type__": "cc.AnimationClip",
-  "_name": "Player_jump",
+  "_name": "Player_idle_",
   "_objFlags": 0,
   "_rawFiles": null,
-  "_duration": 0.5166666666666667,
+  "_duration": 0.016666666666666666,
   "sample": 60,
   "speed": 1,
-  "wrapMode": 1,
+  "wrapMode": "2",
   "curveData": {
     "comps": {
       "cc.Sprite": {
@@ -14,13 +14,7 @@
           {
             "frame": 0,
             "value": {
-              "__uuid__": "acb94aef-8ed4-4517-adcc-56ccbec34e3d"
-            }
-          },
-          {
-            "frame": 0.5,
-            "value": {
-              "__uuid__": "acb94aef-8ed4-4517-adcc-56ccbec34e3d"
+              "__uuid__": "46add3a2-295c-4f5a-a117-2c8f73496052"
             }
           }
         ]
