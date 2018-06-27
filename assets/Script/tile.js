@@ -24,7 +24,7 @@ cc.Class({
              this.Clone();
          }
         else{
-            this.node.y -= 7;
+            this.node.y -= 9;
             }
          
      },
