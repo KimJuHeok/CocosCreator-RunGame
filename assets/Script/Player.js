@@ -56,7 +56,7 @@ cc.Class({
      CheckGameOver() {
          if(!this.isOnPlatform)
          {
-             cc.director.pause();
+            // cc.director.pause();
              cc.log("Game Over");
          }
 

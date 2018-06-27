@@ -22,6 +22,6 @@ cc.Class({
     },
 
      update (dt) {
-         this.node.y -= 9;
+         //this.node.y -= 7;
      },
 });
