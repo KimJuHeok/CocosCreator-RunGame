@@ -26,57 +26,74 @@ cc.Class({
         ScoreArray:{
             default:[],
             type:cc.Integer,
+        },
+        GameOverLayer:{
+            default:null,
+            type:cc.Layout,
         }
     },
 
     // LIFE-CYCLE CALLBACKS:
 
-     onLoad () {
+     onLoad () {  
+         cc.director.resume();
          this.node.on("GameOver",function() {
              this.GameOver();
          },this);
         this.local = cc.sys.localStorage;
-        //this.local.clean();
+        //this.local.clear();
         this.ScoreArrayInit();
        
      },
 
-    start () {
+    start () {  //현재 스코어 초기화, 플랫폼 생성 실행 
         this.CurrentScore = 0;
         this.SpawnDropBegin();
     },
-    GameOver() {
+    GameOver() {  //게임 오버 시 실행
+        let Rank = [];
+        Rank[0] = this.GameOverLayer.node.getChildByName("First");
+        Rank[1] = this.GameOverLayer.node.getChildByName("Second");
+        Rank[2] = this.GameOverLayer.node.getChildByName("Third");
+        Rank[3] = this.GameOverLayer.node.getChildByName("Fourth");
+        Rank[4] = this.GameOverLayer.node.getChildByName("Fifth");
+
         cc.director.pause();
         this.ScoreAdd(this.CurrentScore);
         cc.log("GameOver");
         //cc.log(this.local.getItem("first"));
-        this.ScoreSort();
         this.LocalStorageInit();
-        cc.log("LocalStorage");
-        for(let i = 0; i<this.ScoreArray.length-1;i++){
-            cc.log(this.local.getItem(RankString["%d",i]));
-        }
-        cc.log("ScoreArray");
-        for(let i = 0; i<this.ScoreArray.length-1;i++){
-            cc.log(this.ScoreArray[i]);
-        }
+        this.GameOverLayer.node.active = true;
+        // cc.log("LocalStorage");
+         for(let x = 0; x<this.ScoreArray.length;x++){
+            Rank[x].getComponent(cc.Label).string = this.ScoreArray[x];
+         }
+        // cc.log("ScoreArray");
+        // for(let i = 0; i<this.ScoreArray.length-1;i++){
+        //     cc.log(this.ScoreArray[i]);
+        // }
     },
-    ScoreArrayInit() {
-        for(let i=0; i<this.ScoreArray.length;i++){
-            this.ScoreArray[i] = this.local.getItem(RankString["%d",i]);
+    ScoreArrayInit() {  //점수 배열에 local Storage에 있는 데이터들을 가져와 넣어줌
+        for(let y=0; y<this.ScoreArray.length;y++){
+            if(this.local.getItem(RankString["%d",y]) == null){
+                this.ScoreArray[y] = 0;
+            }
+            else{
+            this.ScoreArray[y] = this.local.getItem(RankString["%d",y]);
+            }
         }
 
     },
-    LocalStorageInit() {
-        for(let i = 0; i<this.ScoreArray.length;i++)
+    LocalStorageInit() { //Local Storage에 게임 끝난 후 남은 모든 점수 배열을 저장해줌
+        for(let m = 0; m<this.ScoreArray.length;m++)
         {
-            this.local.setItem(RankString["%d",i],this.ScoreArray[i]);
+            this.local.setItem(RankString["%d",m],this.ScoreArray[m]);
         }
 
     },
 
 
-    SpawnDrop:function(dt) {
+    SpawnDrop:function(dt) {  //플랫폼 생성
         this.delta += dt;
 
         if( this.delta < 3.1) {
@@ -97,7 +114,7 @@ cc.Class({
         DropObject_.runAction(Sequence);
 
     },
-    SpawnDropBegin() {
+    SpawnDropBegin() {  //게임 시작 시 처음 생성되는 플랫폼
 
         var DropObject = cc.instantiate(this.SpawnObject[0]);
         DropObject.setPosition(0,-990,0);
@@ -111,7 +128,7 @@ cc.Class({
         DropObject.runAction(Sequence);
 
     },
-    ScoreCount(dt) {
+    ScoreCount(dt) { //점수 카운팅
         this.delta_ += dt;
         if(this.delta_ < 1) {
             return;
@@ -122,30 +139,13 @@ cc.Class({
         
 
     },
-    ScoreAdd(Current) {  //스코어를 배열에 넣음, 로컬저장소에도 넣어줌
+    ScoreAdd(Current) {  //스코어를 배열에 넣음
         for(let i = 0; i<this.ScoreArray.length-1; i++){
             if(this.ScoreArray[i] <= Current)
             {
                 this.ScoreArray.splice(i,0,Current);
+                this.ScoreArray.pop();
                 return;
-            }
-
-            if(this.ScoreArray[i] == 0 || this.ScoreArray[i] == null)
-            {
-            this.ScoreArray.splice(i,0,Current);
-            return;
-            }
-        }
-    },
-    ScoreSort() {      //내림차순 정렬 
-        for(let i = 0; i<this.ScoreArray.length-1; i++) {
-            for(let j = 0; j<this.ScoreArray.length-1-i; j++) {
-                if(this.ScoreArray[j] < this.ScoreArray[j+1]) {
-                    let temp;
-                    temp = this.ScoreArray[j];
-                    this.ScoreArray[j] = this.ScoreArray[j+1];
-                    this.ScoreArray[j+1] = temp;
-                } 
             }
         }
     },
