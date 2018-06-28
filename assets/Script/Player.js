@@ -48,6 +48,7 @@ cc.Class({
 
      onCollisionEnter: function (other, self){
           this.isOnPlatform = true;
+          
      },
      onCollisionStay: function (other, self) {
          this.isOnPlatform = true;
@@ -56,9 +57,12 @@ cc.Class({
      CheckGameOver() {
          if(!this.isOnPlatform)
          {
-            // cc.director.pause();
-             cc.log("Game Over");
+             //cc.director.pause();
+             this.node.dispatchEvent(new cc.Event.EventCustom("GameOver",true));
          }
+
+
+ 
 
      },
 
@@ -66,7 +70,6 @@ cc.Class({
 
      update (dt) {
         this.CheckGameOver();
-
         if(!this.isJumping)
         {
         this.isOnPlatform = false;
