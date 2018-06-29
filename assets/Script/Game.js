@@ -140,7 +140,7 @@ cc.Class({
 
     },
     ScoreAdd(Current) {  //스코어를 배열에 넣음
-        for(let i = 0; i<this.ScoreArray.length-1; i++){
+        for(let i = 0; i<this.ScoreArray.length; i++){
             if(this.ScoreArray[i] <= Current)
             {
                 this.ScoreArray.splice(i,0,Current);
