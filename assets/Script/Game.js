@@ -11,8 +11,8 @@ cc.Class({
 
     properties: {
         SpawnObject:{
-            default:[],
-            type:cc.Prefab
+            default:null,
+            type:cc.Prefab,
         },
         SpawnLayer: {
             default:null,
@@ -30,7 +30,10 @@ cc.Class({
         GameOverLayer:{
             default:null,
             type:cc.Layout,
-        }
+        },
+        SpawnLoc_left:-190,  
+        SpawnLoc_middle:23,    
+        SpawnLoc_right:240,   
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -48,30 +51,25 @@ cc.Class({
 
     start () {  //현재 스코어 초기화, 플랫폼 생성 실행 
         this.CurrentScore = 0;
-        this.SpawnDropBegin();
+        //this.SpawnDropBegin();
     },
     GameOver() {  //게임 오버 시 실행
-        let Rank = [];
-        Rank[0] = this.GameOverLayer.node.getChildByName("First");
-        Rank[1] = this.GameOverLayer.node.getChildByName("Second");
-        Rank[2] = this.GameOverLayer.node.getChildByName("Third");
-        Rank[3] = this.GameOverLayer.node.getChildByName("Fourth");
-        Rank[4] = this.GameOverLayer.node.getChildByName("Fifth");
+        // let Rank = [];
+        // Rank[0] = this.GameOverLayer.node.getChildByName("First");
+        // Rank[1] = this.GameOverLayer.node.getChildByName("Second");
+        // Rank[2] = this.GameOverLayer.node.getChildByName("Third");
+        // Rank[3] = this.GameOverLayer.node.getChildByName("Fourth");
+        // Rank[4] = this.GameOverLayer.node.getChildByName("Fifth");
 
-        cc.director.pause();
-        this.ScoreAdd(this.CurrentScore);
-        cc.log("GameOver");
-        //cc.log(this.local.getItem("first"));
-        this.LocalStorageInit();
-        this.GameOverLayer.node.active = true;
-        // cc.log("LocalStorage");
-         for(let x = 0; x<this.ScoreArray.length;x++){
-            Rank[x].getComponent(cc.Label).string = this.ScoreArray[x];
-         }
-        // cc.log("ScoreArray");
-        // for(let i = 0; i<this.ScoreArray.length-1;i++){
-        //     cc.log(this.ScoreArray[i]);
-        // }
+        // cc.director.pause();
+        // this.ScoreAdd(this.CurrentScore);
+        // cc.log("GameOver");
+        // this.LocalStorageInit();
+        // this.GameOverLayer.node.active = true;
+        //  for(let x = 0; x<this.ScoreArray.length;x++){
+        //     Rank[x].getComponent(cc.Label).string = this.ScoreArray[x];
+        //  }
+
     },
     ScoreArrayInit() {  //점수 배열에 local Storage에 있는 데이터들을 가져와 넣어줌
         for(let y=0; y<this.ScoreArray.length;y++){
@@ -96,21 +94,21 @@ cc.Class({
     SpawnDrop:function(dt) {  //플랫폼 생성
         this.delta += dt;
 
-        if( this.delta < 3.1) {
+        if( this.delta < 0.5) {
             return;
         }
         this.delta = 0;
 
-        var DropObject_ = cc.instantiate(this.SpawnObject[Math.round(this.getRandom(1,this.SpawnObject.length-1))]);
-        DropObject_.setPosition(0,1080,0);
-        var dropSpeed = 7;
-        var moveTo = cc.moveTo(dropSpeed,cc.p(0,-2700));
+         let DropObject_ = cc.instantiate(this.SpawnObject);
+         let SpawnLoc = this.getRandomSpawnLoc();
+        DropObject_.setPosition(SpawnLoc,1080,0);
+        let moveTo = cc.moveTo(5,cc.p(SpawnLoc,-1920));
 
-        var Sequence = cc.sequence(
+        let Sequence = cc.sequence(
             moveTo,
             cc.removeSelf(true),
         );
-        this.SpawnLayer.node.addChild(DropObject_);
+        this.SpawnLayer.node.insertChild(DropObject_,0);
         DropObject_.runAction(Sequence);
 
     },
@@ -118,8 +116,7 @@ cc.Class({
 
         var DropObject = cc.instantiate(this.SpawnObject[0]);
         DropObject.setPosition(0,-990,0);
-        var dropSpeed = 7;
-        var moveTo = cc.moveTo(dropSpeed,cc.p(0,-4770));
+        var moveTo = cc.moveTo(this.dropSpeed,cc.p(0,-4770));
         var Sequence = cc.sequence(
             moveTo,
             cc.removeSelf(true),
@@ -154,6 +151,17 @@ cc.Class({
         this.ScoreCount(dt);
         this.SpawnDrop(dt);
       
+     },
+     getRandomSpawnLoc(){
+         switch (Math.round(this.getRandom(0,2))) {
+            case 0:
+                return this.SpawnLoc_left;
+            case 1:
+                return this.SpawnLoc_middle;
+            case 2:
+                return this.SpawnLoc_right;
+  
+        } 
      },
 
      getRandom(min, max) {

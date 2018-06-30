@@ -12,9 +12,9 @@ cc.Class({
 
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {},
 
     start () {
+        
 
     },
 
@@ -24,7 +24,7 @@ cc.Class({
              this.Clone();
          }
         else{
-            this.node.y -= 9;
+            this.node.y -= 13;
             }
          
      },
@@ -33,6 +33,6 @@ cc.Class({
         var temp = cc.instantiate(this.Spawn);
         temp.setPosition(0,1994,0);
         this.node.destroy();
-        this.node.parent.addChild(temp);
+        this.node.parent.insertChild(temp,0);
      },
 });

@@ -1,12 +1,3 @@
-// Learn cc.Class:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/class.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/class.html
-// Learn Attribute:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/reference/attributes.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 
 cc.Class({
     extends: cc.Component,
@@ -18,6 +9,12 @@ cc.Class({
             type:cc.Node,
         },
         PlayerLimit: 0,
+        InputArray: {
+            default:[],
+            type:cc.Integer,
+        },
+        Right:2,
+        Left:3,
         
     },
 
@@ -45,27 +42,41 @@ cc.Class({
             if(XforCheck > Xorigin+100)
             {
                   // Right Swipe\
-                if(IsWorkable) {
-                  if(!this.playerScript.GetIsJumping()) {
-                      if(this.PlayerLimit <= 0) {
-                      this.playerScript.OnRight();
-                      this.PlayerLimit += 1;
-                      IsWorkable = false;
-                      }
-                    }
+                // if(IsWorkable) {
+                //   if(!this.playerScript.GetIsJumping()) {
+                //       if(this.PlayerLimit <= 0) {
+                //       this.playerScript.OnRight();
+                //       this.PlayerLimit += 1;
+                //       IsWorkable = false;
+                //       }
+                //     }
+                // }
+                if(IsWorkable){
+                if(this.PlayerLimit <= 0) {
+                this.InputArray.unshift(this.Right);
+                this.PlayerLimit +=1;
+                IsWorkable = false;
                 }
+            }
                 
             }
             if(XforCheck < Xorigin-100)
             {
                   // Left Swipe
-                if(IsWorkable){
-                    if(!this.playerScript.GetIsJumping()) {
-                        if(this.PlayerLimit >= 0) {
-                       this.playerScript.OnLeft();
-                       this.PlayerLimit -= 1;
-                       IsWorkable = false;
-                        }
+                // if(IsWorkable){
+                //     if(!this.playerScript.GetIsJumping()) {
+                //         if(this.PlayerLimit >= 0) {
+                //        this.playerScript.OnLeft();
+                //        this.PlayerLimit -= 1;
+                //        IsWorkable = false;
+                //         }
+                //     }
+                // }
+                if(IsWorkable){ 
+                if(this.PlayerLimit >= 0) {
+                    this.InputArray.unshift(this.Left);
+                    this.PlayerLimit -=1;
+                    IsWorkable = false;
                     }
                 }
             }   
@@ -78,5 +89,26 @@ cc.Class({
     // start () {
     // },
 
-    // update (dt) {},
+     update (dt) {
+         if(!this.InputArray[0] == 0){
+         for(let i = 0;this.InputArray.length; i++)
+         {
+            if(!this.playerScript.GetIsJumping()){
+             switch(this.InputArray[i])
+             {
+                 case this.Right:
+                 this.playerScript.OnRight();
+                 this.InputArray.splice(i,1);
+                 break;
+                 case this.Left:
+                 this.playerScript.OnLeft();
+                 this.InputArray.splice(i,1);
+                 break;
+             }
+            }
+             return;
+
+         }
+        }
+     },
 });
