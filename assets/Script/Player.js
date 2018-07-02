@@ -8,6 +8,7 @@ cc.Class({
         DrawCollision:false,
         isJumping:false,
         isOnPlatform:true,
+        PlayerLoc:0,
 
     },
 
@@ -44,6 +45,12 @@ cc.Class({
      },
      GetIsJumping() {
          return this.isJumping;
+     },
+     SetPlayerLoc(num) {
+         this.PlayerLoc = num;
+     },
+     GetPlayerLoc() {
+         return this.PlayerLoc;
      },
 
      onCollisionEnter: function (other, self){

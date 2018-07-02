@@ -8,7 +8,6 @@ cc.Class({
             default:null,
             type:cc.Node,
         },
-        PlayerLimit: 0,
         InputArray: {
             default:[],
             type:cc.Integer,
@@ -41,20 +40,10 @@ cc.Class({
 
             if(XforCheck > Xorigin+100)
             {
-                  // Right Swipe\
-                // if(IsWorkable) {
-                //   if(!this.playerScript.GetIsJumping()) {
-                //       if(this.PlayerLimit <= 0) {
-                //       this.playerScript.OnRight();
-                //       this.PlayerLimit += 1;
-                //       IsWorkable = false;
-                //       }
-                //     }
-                // }
                 if(IsWorkable){
-                if(this.PlayerLimit <= 0) {
+                if(this.playerScript.GetPlayerLoc()<= 0) {
                 this.InputArray.unshift(this.Right);
-                this.PlayerLimit +=1;
+                this.playerScript.SetPlayerLoc(this.playerScript.GetPlayerLoc()+1);
                 IsWorkable = false;
                 }
             }
@@ -62,20 +51,10 @@ cc.Class({
             }
             if(XforCheck < Xorigin-100)
             {
-                  // Left Swipe
-                // if(IsWorkable){
-                //     if(!this.playerScript.GetIsJumping()) {
-                //         if(this.PlayerLimit >= 0) {
-                //        this.playerScript.OnLeft();
-                //        this.PlayerLimit -= 1;
-                //        IsWorkable = false;
-                //         }
-                //     }
-                // }
                 if(IsWorkable){ 
-                if(this.PlayerLimit >= 0) {
+                if(this.playerScript.GetPlayerLoc()>= 0) {
                     this.InputArray.unshift(this.Left);
-                    this.PlayerLimit -=1;
+                    this.playerScript.SetPlayerLoc(this.playerScript.GetPlayerLoc()-1);
                     IsWorkable = false;
                     }
                 }
@@ -85,9 +64,6 @@ cc.Class({
          },this)
 
      },
-
-    // start () {
-    // },
 
      update (dt) {
          if(!this.InputArray[0] == 0){

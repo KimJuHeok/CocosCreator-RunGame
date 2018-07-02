@@ -959,7 +959,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 5,
-      "y": -709
+      "y": -700
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -1005,7 +1005,8 @@
     "jumpLoc": 210,
     "DrawCollision": false,
     "isJumping": false,
-    "isOnPlatform": true
+    "isOnPlatform": true,
+    "PlayerLoc": 0
   },
   {
     "__type__": "cc.Animation",
@@ -1156,9 +1157,14 @@
     "GameOverLayer": {
       "__id__": 39
     },
+    "Player": {
+      "__id__": 27
+    },
     "SpawnLoc_left": -190,
     "SpawnLoc_middle": 23,
-    "SpawnLoc_right": 240
+    "SpawnLoc_right": 240,
+    "ObjectAmount": 100,
+    "ObjectCount": 0
   },
   {
     "__type__": "cc.Label",
@@ -2399,7 +2405,6 @@
     "Player": {
       "__id__": 27
     },
-    "PlayerLimit": 0,
     "InputArray": [
       0,
       0,
