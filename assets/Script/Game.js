@@ -80,21 +80,21 @@ cc.Class({
         
     },
     GameOver() {  //게임 오버 시 실행
-        let Rank = [];
-        Rank[0] = this.GameOverLayer.node.getChildByName("First");
-        Rank[1] = this.GameOverLayer.node.getChildByName("Second");
-        Rank[2] = this.GameOverLayer.node.getChildByName("Third");
-        Rank[3] = this.GameOverLayer.node.getChildByName("Fourth");
-        Rank[4] = this.GameOverLayer.node.getChildByName("Fifth");
+        // let Rank = [];
+        // Rank[0] = this.GameOverLayer.node.getChildByName("First");
+        // Rank[1] = this.GameOverLayer.node.getChildByName("Second");
+        // Rank[2] = this.GameOverLayer.node.getChildByName("Third");
+        // Rank[3] = this.GameOverLayer.node.getChildByName("Fourth");
+        // Rank[4] = this.GameOverLayer.node.getChildByName("Fifth");
 
-        cc.director.pause();
-        this.ScoreAdd(this.CurrentScore);
-        cc.log("GameOver");
-        this.LocalStorageInit();
-        this.GameOverLayer.node.active = true;
-         for(let x = 0; x<this.ScoreArray.length;x++){
-            Rank[x].getComponent(cc.Label).string = this.ScoreArray[x];
-         }
+        // cc.director.pause();
+        // this.ScoreAdd(this.CurrentScore);
+        // cc.log("GameOver");
+        // this.LocalStorageInit();
+        // this.GameOverLayer.node.active = true;
+        //  for(let x = 0; x<this.ScoreArray.length;x++){
+        //     Rank[x].getComponent(cc.Label).string = this.ScoreArray[x];
+        //  }
 
     },
     ScoreArrayInit() {  //점수 배열에 local Storage에 있는 데이터들을 가져와 넣어줌
@@ -118,17 +118,16 @@ cc.Class({
 
 
     SpawnDrop:function(dt) {  //플랫폼 생성
-        
-        this.delta += dt;
+        this.deltaTime += dt;
 
-        if( this.delta < 0.3) {
+        if( this.deltaTime < 0.3) {
             return;
         }
         if(this.ObjectCount == 100)
         {
             this.ObjectCount = 0;
         }
-        this.delta = 0;
+        this.deltaTime = 0;
         this.ObjectArr[this.ObjectCount].setPosition(this.getRandomSpawnLoc(),1920,0);
         this.ObjectArr[this.ObjectCount].active = true;
         this.ObjectCount++;
@@ -169,6 +168,9 @@ cc.Class({
      update (dt) {
             this.ScoreCount(dt);
             this.SpawnDrop(dt);
+     },
+      RealTimeUpdate() {
+         cc.log("true");
      },
      getRandomSpawnLoc(){
          let SpawnLoc = this.getRandom(0,2);

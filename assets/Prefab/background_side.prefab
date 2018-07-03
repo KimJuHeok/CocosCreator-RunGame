@@ -93,18 +93,6 @@
     "_atlas": null
   },
   {
-    "__type__": "c371b0e6pxKUIsu3SxYBBsL",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "Spawn": {
-      "__uuid__": "a4ff36a0-67da-4a38-99dc-72be55798a8c"
-    }
-  },
-  {
     "__type__": "cc.BoxCollider",
     "_name": "",
     "_objFlags": 0,
@@ -125,12 +113,21 @@
     }
   },
   {
+    "__type__": "e81185AXP1AmLtOIJxKDJH7",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true
+  },
+  {
     "__type__": "cc.PrefabInfo",
     "root": {
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "a4ff36a0-67da-4a38-99dc-72be55798a8c"
     },
     "fileId": "53xxGsSYNBZ59T0AsApA0Q",
     "sync": false
