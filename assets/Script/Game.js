@@ -35,66 +35,79 @@ cc.Class({
             default:null,
             type:cc.Node,
         },
+        Background:{
+            default:[],
+            type:cc.Node,
+        },
         SpawnLoc_left:-190,  
         SpawnLoc_middle:23,    
         SpawnLoc_right:240,
         ObjectAmount:100,  
         ObjectCount:0,
+        IsStarted:false,
+        deltaTime:0,
  
     },
 
     // LIFE-CYCLE CALLBACKS:
 
      onLoad () { 
-         this.playerScript = this.Player.getComponent('Player');
+         this.ObjectComp = [];
          cc.director.resume();
          this.ObjectArr = [];
+         this.playerScript = this.Player.getComponent('Player');
          this.PrevSpawnLoc = 4;
          this.node.on("GameOver",function() {
              this.GameOver();
          },this);
         this.local = cc.sys.localStorage;
         this.ScoreArrayInit();
-        
         for(let i = 0; i<this.ObjectAmount;i++)
         {
             this.ObjectArr[i] = cc.instantiate(this.SpawnObject);
             this.ObjectArr[i].active = false;
             this.SpawnLayer.node.insertChild(this.ObjectArr[i],0);
+            this.ObjectComp[i] = this.ObjectArr[i].getComponent('Platform');
         }
      },
 
-    start () {  //현재 스코어 초기화, 플랫폼 생성 실행 
+    start () {  //현재 스코어 초기화, 플랫폼 생성 실행,
         this.CurrentScore = 0;
         this.SpawnDropBegin();
-        
+        this.SetSpeedBackground(0);
+        this.SetPlayerDefaultLoc();
+    },
+    SetPlayerDefaultLoc(){
+        this.Player.x = this.ObjectArr[0].x - 10;
+        this.Player.y = -700;
+
         switch(this.Player.x + 10)
         {
             case this.SpawnLoc_left:
             return this.playerScript.SetPlayerLoc(-1);
             case this.SpawnLoc_middle:
-            return this.playerScript.SetPalyerLoc(0);
+            return this.playerScript.SetPlayerLoc(0);
             case this.SpawnLoc_right:
             return this.playerScript.SetPlayerLoc(1);
         }
-        
+
     },
     GameOver() {  //게임 오버 시 실행
-        // let Rank = [];
-        // Rank[0] = this.GameOverLayer.node.getChildByName("First");
-        // Rank[1] = this.GameOverLayer.node.getChildByName("Second");
-        // Rank[2] = this.GameOverLayer.node.getChildByName("Third");
-        // Rank[3] = this.GameOverLayer.node.getChildByName("Fourth");
-        // Rank[4] = this.GameOverLayer.node.getChildByName("Fifth");
+        let Rank = [];
+        Rank[0] = this.GameOverLayer.node.getChildByName("First");
+        Rank[1] = this.GameOverLayer.node.getChildByName("Second");
+        Rank[2] = this.GameOverLayer.node.getChildByName("Third");
+        Rank[3] = this.GameOverLayer.node.getChildByName("Fourth");
+        Rank[4] = this.GameOverLayer.node.getChildByName("Fifth");
 
-        // cc.director.pause();
-        // this.ScoreAdd(this.CurrentScore);
-        // cc.log("GameOver");
-        // this.LocalStorageInit();
-        // this.GameOverLayer.node.active = true;
-        //  for(let x = 0; x<this.ScoreArray.length;x++){
-        //     Rank[x].getComponent(cc.Label).string = this.ScoreArray[x];
-        //  }
+        cc.director.pause();
+        this.ScoreAdd(this.CurrentScore);
+        cc.log("GameOver");
+        this.LocalStorageInit();
+        this.GameOverLayer.node.active = true;
+         for(let x = 0; x<this.ScoreArray.length;x++){
+            Rank[x].getComponent(cc.Label).string = this.ScoreArray[x];
+         }
 
     },
     ScoreArrayInit() {  //점수 배열에 local Storage에 있는 데이터들을 가져와 넣어줌
@@ -118,16 +131,16 @@ cc.Class({
 
 
     SpawnDrop:function(dt) {  //플랫폼 생성
-        this.deltaTime += dt;
+        this.deltaTime_ += dt;
 
-        if( this.deltaTime < 0.3) {
+        if( this.deltaTime_ < 0.3) {
             return;
         }
-        if(this.ObjectCount == 100)
+        if(this.ObjectCount == this.ObjectAmount)
         {
             this.ObjectCount = 0;
         }
-        this.deltaTime = 0;
+        this.deltaTime_ = 0;
         this.ObjectArr[this.ObjectCount].setPosition(this.getRandomSpawnLoc(),1920,0);
         this.ObjectArr[this.ObjectCount].active = true;
         this.ObjectCount++;
@@ -138,9 +151,35 @@ cc.Class({
             this.ObjectArr[i].setPosition(this.getRandomSpawnLoc(),i*162-750,0);
             this.ObjectArr[i].active = true;
             this.ObjectCount++;
+            this.ObjectComp[i].SetSpeed(0);
         }
-        this.Player.x = this.ObjectArr[0].x - 10;
-        this.Player.y = -700;
+
+
+    },
+    SetSpeedBackground(Speed){
+        let temp_1 = [];
+        let temp_2 = [];
+        for(let i = 0; i<2;i++)
+        {
+            temp_1[i] = this.Background[i].getComponent('BackgroundTile');
+            temp_1[i].SetSpeed(Speed);
+        }
+        for(let i = 2; i<4;i++)
+        {
+            temp_2[i] = this.Background[i].getComponent('BackgroundTile');
+            if(Speed == 0){
+                temp_2[i].SetSpeed(Speed);
+            }
+            else{
+                temp_2[i].SetSpeed(Speed+3);
+            }
+            
+        }
+    },
+    SetSpeedPlatformArr(Speed){
+        for(let i = 0; i<this.ObjectAmount;i++) {
+            this.ObjectComp[i].SetSpeed(Speed);
+        }
 
     },
     ScoreCount(dt) { //점수 카운팅
@@ -166,11 +205,19 @@ cc.Class({
     },
 
      update (dt) {
+        if(this.IsStarted == false)
+        {
+            this.deltaTime += dt;
+            if(this.deltaTime >= 3)
+            {
+                this.IsStarted = true;
+                this.SetSpeedPlatformArr(9);
+                this.SetSpeedBackground(9);
+            }
+            return;
+        }
             this.ScoreCount(dt);
             this.SpawnDrop(dt);
-     },
-      RealTimeUpdate() {
-         cc.log("true");
      },
      getRandomSpawnLoc(){
          let SpawnLoc = this.getRandom(0,2);
@@ -199,5 +246,5 @@ cc.Class({
          return this.getRandom(0,2);
          }
         return SpawnLoc;
-    }
+    },
 });

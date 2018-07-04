@@ -3,12 +3,14 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+        LocalSpeed:9,
+
     },
 
     // onLoad () {},
 
     start () {
-        this.LocalSpeed = 9;
+        //this.LocalSpeed = 9;
 
     },
     SetSpeed(speed) {
