@@ -1,4 +1,3 @@
-
 cc.Class({
     extends: cc.Component,
 
@@ -14,6 +13,10 @@ cc.Class({
         },
         Right:2,
         Left:3,
+        Game:{
+            default:null,
+            type:cc.Node,
+        },
         
     },
 
@@ -23,14 +26,14 @@ cc.Class({
         var Xorigin;
         var XforCheck;
         var IsWorkable = false; //터치 중인지 체크
+        this.GameComp = this.Game.getComponent('Game');
         this.playerScript = this.Player.getComponent('Player');
-
         this.node.on('touchstart',function(touch){
             Xorigin = touch.getLocation().x;
             XforCheck = Xorigin;
             IsWorkable = true;
         },this.node)
-
+        cc.log(this.GameComp);
 
          this.node.on('touchmove',function(event) {  
               var delta = event.touch.getDelta();
@@ -40,17 +43,20 @@ cc.Class({
 
             if(XforCheck > Xorigin+100)
             {
-                if(IsWorkable){
+                if(this.GameComp.IsStarted) {
+                if(IsWorkable) {
                 if(this.playerScript.GetPlayerLoc()<= 0) {
                 this.InputArray.unshift(this.Right);
                 this.playerScript.SetPlayerLoc(this.playerScript.GetPlayerLoc()+1);
                 IsWorkable = false;
+                }
                 }
             }
                 
             }
             if(XforCheck < Xorigin-100)
             {
+                if(this.GameComp.IsStarted) {
                 if(IsWorkable){ 
                 if(this.playerScript.GetPlayerLoc()>= 0) {
                     this.InputArray.unshift(this.Left);
@@ -58,6 +64,7 @@ cc.Class({
                     IsWorkable = false;
                     }
                 }
+            }
             }   
 
 
@@ -66,12 +73,15 @@ cc.Class({
      },
 
      update (dt) {
-         if(!this.InputArray[0] == 0){
-         for(let i = 0;this.InputArray.length; i++)
-         {
-            if(!this.playerScript.GetIsJumping()){
-             switch(this.InputArray[i])
+
+            if(!this.InputArray[0] == 0)
              {
+                for(let i = 0;this.InputArray.length; i++)
+              {
+                 if(!this.playerScript.GetIsJumping())
+                {
+                    switch(this.InputArray[i])
+                 {
                  case this.Right:
                  this.playerScript.OnRight();
                  this.InputArray.splice(i,1);
@@ -80,11 +90,10 @@ cc.Class({
                  this.playerScript.OnLeft();
                  this.InputArray.splice(i,1);
                  break;
-             }
-            }
+                 }
+                }
              return;
-
-         }
-        }
+              }
+             }
      },
 });

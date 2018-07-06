@@ -35,9 +35,13 @@ cc.Class({
             default:null,
             type:cc.Node,
         },
-        Background:{
+        Background:{  //1,2번째 인자 : background, 2,3번째 인자 : background_side
             default:[],
             type:cc.Node,
+        },
+        StartLabel:{
+            default:null,
+            type:cc.Label,
         },
         SpawnLoc_left:-190,  
         SpawnLoc_middle:23,    
@@ -45,7 +49,8 @@ cc.Class({
         ObjectAmount:100,  
         ObjectCount:0,
         IsStarted:false,
-        deltaTime:0,
+        CountDown:3,
+
  
     },
 
@@ -67,6 +72,7 @@ cc.Class({
             this.ObjectArr[i] = cc.instantiate(this.SpawnObject);
             this.ObjectArr[i].active = false;
             this.SpawnLayer.node.insertChild(this.ObjectArr[i],0);
+            //this.SpawnLayer.node.addChild(this.ObjectArr[i],10);
             this.ObjectComp[i] = this.ObjectArr[i].getComponent('Platform');
         }
      },
@@ -147,8 +153,8 @@ cc.Class({
 
     },
     SpawnDropBegin() {  //게임 시작 시 처음 생성되는 플랫폼
-        for(let i=0; i<16; i++){
-            this.ObjectArr[i].setPosition(this.getRandomSpawnLoc(),i*162-750,0);
+        for(let i=0; i<=16; i++){
+            this.ObjectArr[i].setPosition(this.getRandomSpawnLoc(),i*160-770,0);
             this.ObjectArr[i].active = true;
             this.ObjectCount++;
             this.ObjectComp[i].SetSpeed(0);
@@ -207,20 +213,22 @@ cc.Class({
      update (dt) {
         if(this.IsStarted == false)
         {
-            this.deltaTime += dt;
-            if(this.deltaTime >= 3)
+            this.CountDown -= dt;
+            if(this.CountDown <= 0)
             {
                 this.IsStarted = true;
                 this.SetSpeedPlatformArr(9);
                 this.SetSpeedBackground(9);
+                this.StartLabel.node.destroy();
             }
+            this.StartLabel.string = Math.ceil(this.CountDown);
             return;
         }
             this.ScoreCount(dt);
             this.SpawnDrop(dt);
      },
      getRandomSpawnLoc(){
-         let SpawnLoc = this.getRandom(0,2);
+         let SpawnLoc = this.getRandomForSpawn(0,2);
 
          switch (SpawnLoc) {
             case 0:
@@ -239,12 +247,30 @@ cc.Class({
         
      },
 
-     getRandom(min, max) {
+     getRandomForSpawn(min, max) {
          let SpawnLoc = Math.floor(Math.random() * (max - min + 1)) + min;
-         if(SpawnLoc+this.PrevSpawnLoc == 2)
+
+        //  if(SpawnLoc+this.PrevSpawnLoc == 2)
+        //  {
+        //  return this.getRandomForSpawn(0,2);
+        //  }
+         if(this.ObjectCount == 0)
          {
-         return this.getRandom(0,2);
+             if(SpawnLoc == this.PrevSpawnLoc || SpawnLoc+this.PrevSpawnLoc == 2)
+             {
+                return this.getRandomForSpawn(0,2);
+             }
+         }
+         else
+         {
+             if(SpawnLoc+this.PrevSpawnLoc == 2)
+             {
+                 return this.getRandomForSpawn(0,2);
+             }
          }
         return SpawnLoc;
     },
+    getRandom(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+   },
 });
