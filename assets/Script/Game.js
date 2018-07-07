@@ -48,7 +48,8 @@ cc.Class({
         SpawnLoc_right:240,
         ObjectAmount:100,  
         ObjectCount:0,
-        IsStarted:false,
+        IsCountDownOver:false,
+        IsGameOver:false,
         CountDown:3,
 
  
@@ -57,14 +58,15 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
      onLoad () { 
-         this.ObjectComp = [];
-         cc.director.resume();
-         this.ObjectArr = [];
-         this.playerScript = this.Player.getComponent('Player');
-         this.PrevSpawnLoc = 4;
-         this.node.on("GameOver",function() {
+         this.node.once("GameOver",function() {
              this.GameOver();
          },this);
+        this.TouchMovement = this.node.parent.getComponent('TouchMovement');
+        this.ObjectComp = [];
+        cc.director.resume();
+        this.ObjectArr = [];
+        this.playerScript = this.Player.getComponent('Player');
+        this.PrevSpawnLoc = 4;
         this.local = cc.sys.localStorage;
         this.ScoreArrayInit();
         for(let i = 0; i<this.ObjectAmount;i++)
@@ -83,6 +85,14 @@ cc.Class({
         this.SetSpeedBackground(0);
         this.SetPlayerDefaultLoc();
     },
+    GamePause() {
+        this.SetSpeedBackground(0);
+        this.SetSpeedPlatformArr(0);
+        this.IsGameOver = true;
+        this.TouchMovement.InputClear();
+        this.playerScript.node.stopAllActions();
+    },
+ 
     SetPlayerDefaultLoc(){
         this.Player.x = this.ObjectArr[0].x - 10;
         this.Player.y = -700;
@@ -106,7 +116,7 @@ cc.Class({
         Rank[3] = this.GameOverLayer.node.getChildByName("Fourth");
         Rank[4] = this.GameOverLayer.node.getChildByName("Fifth");
 
-        cc.director.pause();
+        this.GamePause();
         this.ScoreAdd(this.CurrentScore);
         cc.log("GameOver");
         this.LocalStorageInit();
@@ -211,12 +221,14 @@ cc.Class({
     },
 
      update (dt) {
-        if(this.IsStarted == false)
+         if(!this.IsGameOver)
+         {
+        if(!this.IsCountDownOver)
         {
             this.CountDown -= dt;
             if(this.CountDown <= 0)
             {
-                this.IsStarted = true;
+                this.IsCountDownOver = true;
                 this.SetSpeedPlatformArr(9);
                 this.SetSpeedBackground(9);
                 this.StartLabel.node.destroy();
@@ -226,6 +238,7 @@ cc.Class({
         }
             this.ScoreCount(dt);
             this.SpawnDrop(dt);
+        }
      },
      getRandomSpawnLoc(){
          let SpawnLoc = this.getRandomForSpawn(0,2);
@@ -273,4 +286,5 @@ cc.Class({
     getRandom(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
    },
+
 });

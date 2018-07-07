@@ -43,7 +43,7 @@ cc.Class({
 
             if(XforCheck > Xorigin+100)
             {
-                if(this.GameComp.IsStarted) {
+                if(this.GameComp.IsCountDownOver  && !this.GameComp.IsGameOver) {
                 if(IsWorkable) {
                 if(this.playerScript.GetPlayerLoc()<= 0) {
                 this.InputArray.unshift(this.Right);
@@ -56,7 +56,7 @@ cc.Class({
             }
             if(XforCheck < Xorigin-100)
             {
-                if(this.GameComp.IsStarted) {
+                if(this.GameComp.IsCountDownOver  && !this.GameComp.IsGameOver){
                 if(IsWorkable){ 
                 if(this.playerScript.GetPlayerLoc()>= 0) {
                     this.InputArray.unshift(this.Left);
@@ -76,24 +76,25 @@ cc.Class({
 
             if(!this.InputArray[0] == 0)
              {
-                for(let i = 0;this.InputArray.length; i++)
-              {
-                 if(!this.playerScript.GetIsJumping())
+                if(!this.playerScript.GetIsJumping())
                 {
-                    switch(this.InputArray[i])
+                switch(this.InputArray[i])
                  {
                  case this.Right:
                  this.playerScript.OnRight();
                  this.InputArray.splice(i,1);
+                 this.playerScript.CheckGameOver();
                  break;
                  case this.Left:
                  this.playerScript.OnLeft();
                  this.InputArray.splice(i,1);
+                 this.playerScript.CheckGameOver();
                  break;
                  }
                 }
-             return;
-              }
              }
+     },
+     InputClear() {
+         this.InputArray.splice(0,this.InputArray.length);
      },
 });

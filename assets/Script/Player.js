@@ -31,7 +31,7 @@ cc.Class({
         this.anim.play("Player_jump_");
         this.isJumping = true;
 
-        var jumpRight = cc.jumpBy(0.15, cc.p(this.jumpLoc,0), 50,1);
+        let jumpRight = cc.jumpBy(0.12, cc.p(this.jumpLoc,0), 50,1);
         this.node.runAction(jumpRight);
 
      },
@@ -39,7 +39,7 @@ cc.Class({
      OnLeft() {
         this.anim.play("Player_jump_");
         this.isJumping = true;
-        var jumpLeft = cc.jumpBy(0.15, cc.p(-this.jumpLoc,0), 50,1);
+        let jumpLeft = cc.jumpBy(0.12, cc.p(-this.jumpLoc,0), 50,1);
         this.node.runAction(jumpLeft);
      },
      GetIsJumping() {
@@ -75,10 +75,16 @@ cc.Class({
 
 
      update (dt) {
+
         this.CheckGameOver();
-        if(!this.isJumping)
+        if(this.isJumping)
         {
-        this.isOnPlatform = false;
+        this.isOnPlatform = true;
         }
+        else{
+            this.isOnPlatform =false;
+        }
+
+
      },
 });
