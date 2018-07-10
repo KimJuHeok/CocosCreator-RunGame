@@ -10,14 +10,6 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        SpawnObject:{
-            default:null,
-            type:cc.Prefab,
-        },
-        SpawnLayer: {
-            default:null,
-            type:cc.Layout,
-        },
         ScoreLabel: {
             default:null,
             type:cc.Label,
@@ -46,11 +38,13 @@ cc.Class({
         SpawnLoc_left:-190,  
         SpawnLoc_middle:23,    
         SpawnLoc_right:240,
-        ObjectAmount:100,  
-        ObjectCount:0,
         IsCountDownOver:false,
         IsGameOver:false,
-        CountDown:3,
+        CountDown:5.3,
+        maskLayer:{
+            default:null,
+            type:cc.Node,
+        }
 
  
     },
@@ -61,40 +55,40 @@ cc.Class({
          this.node.once("GameOver",function() {
              this.GameOver();
          },this);
-        this.TouchMovement = this.node.parent.getComponent('TouchMovement');
-        this.ObjectComp = [];
         cc.director.resume();
-        this.ObjectArr = [];
+        this.Spawner = this.node.getComponent('Spawner');
+        this.TouchMovement = this.node.parent.getComponent('TouchMovement');
         this.playerScript = this.Player.getComponent('Player');
         this.PrevSpawnLoc = 4;
         this.local = cc.sys.localStorage;
         this.ScoreArrayInit();
-        for(let i = 0; i<this.ObjectAmount;i++)
-        {
-            this.ObjectArr[i] = cc.instantiate(this.SpawnObject);
-            this.ObjectArr[i].active = false;
-            this.SpawnLayer.node.insertChild(this.ObjectArr[i],0);
-            //this.SpawnLayer.node.addChild(this.ObjectArr[i],10);
-            this.ObjectComp[i] = this.ObjectArr[i].getComponent('Platform');
-        }
+        this.FadeOutScene();
+        
      },
+     FadeOutScene(){
+        this.maskLayer.active = true;
+        this.maskLayer.color = cc.Color.BLACK;
+        this.maskLayer.runAction(cc.fadeOut(0.2));
+    },
 
     start () {  //현재 스코어 초기화, 플랫폼 생성 실행,
+
         this.CurrentScore = 0;
-        this.SpawnDropBegin();
-        this.SetSpeedBackground(0);
+        this.Spawner.BeginSpawn();
+        this.SetSpeedBackground(9);
+        this.Spawner.SetSpeedPlatformArr(9);
         this.SetPlayerDefaultLoc();
     },
     GamePause() {
         this.SetSpeedBackground(0);
-        this.SetSpeedPlatformArr(0);
+        this.Spawner.SetSpeedPlatformArr(0);
         this.IsGameOver = true;
         this.TouchMovement.InputClear();
         this.playerScript.node.stopAllActions();
     },
  
     SetPlayerDefaultLoc(){
-        this.Player.x = this.ObjectArr[0].x - 10;
+        this.Player.x = this.Spawner.FirstLoc;
         this.Player.y = -700;
 
         switch(this.Player.x + 10)
@@ -109,6 +103,9 @@ cc.Class({
 
     },
     GameOver() {  //게임 오버 시 실행
+
+        let Current = this.GameOverLayer.node.getChildByName("Current");
+        Current.getComponent(cc.Label).string = this.CurrentScore;
         let Rank = [];
         Rank[0] = this.GameOverLayer.node.getChildByName("First");
         Rank[1] = this.GameOverLayer.node.getChildByName("Second");
@@ -118,7 +115,6 @@ cc.Class({
 
         this.GamePause();
         this.ScoreAdd(this.CurrentScore);
-        cc.log("GameOver");
         this.LocalStorageInit();
         this.GameOverLayer.node.active = true;
          for(let x = 0; x<this.ScoreArray.length;x++){
@@ -144,34 +140,6 @@ cc.Class({
         }
 
     },
-
-
-    SpawnDrop:function(dt) {  //플랫폼 생성
-        this.deltaTime_ += dt;
-
-        if( this.deltaTime_ < 0.3) {
-            return;
-        }
-        if(this.ObjectCount == this.ObjectAmount)
-        {
-            this.ObjectCount = 0;
-        }
-        this.deltaTime_ = 0;
-        this.ObjectArr[this.ObjectCount].setPosition(this.getRandomSpawnLoc(),1920,0);
-        this.ObjectArr[this.ObjectCount].active = true;
-        this.ObjectCount++;
-
-    },
-    SpawnDropBegin() {  //게임 시작 시 처음 생성되는 플랫폼
-        for(let i=0; i<=16; i++){
-            this.ObjectArr[i].setPosition(this.getRandomSpawnLoc(),i*160-770,0);
-            this.ObjectArr[i].active = true;
-            this.ObjectCount++;
-            this.ObjectComp[i].SetSpeed(0);
-        }
-
-
-    },
     SetSpeedBackground(Speed){
         let temp_1 = [];
         let temp_2 = [];
@@ -191,12 +159,6 @@ cc.Class({
             }
             
         }
-    },
-    SetSpeedPlatformArr(Speed){
-        for(let i = 0; i<this.ObjectAmount;i++) {
-            this.ObjectComp[i].SetSpeed(Speed);
-        }
-
     },
     ScoreCount(dt) { //점수 카운팅
         this.delta_ += dt;
@@ -222,69 +184,32 @@ cc.Class({
 
      update (dt) {
          if(!this.IsGameOver)
-         {
-        if(!this.IsCountDownOver)
         {
+        this.Spawner.SpawnDrop(dt);
+
+        if(!this.IsCountDownOver) {
             this.CountDown -= dt;
-            if(this.CountDown <= 0)
-            {
+            if(this.CountDown <= 0) {
                 this.IsCountDownOver = true;
-                this.SetSpeedPlatformArr(9);
-                this.SetSpeedBackground(9);
                 this.StartLabel.node.destroy();
             }
-            this.StartLabel.string = Math.ceil(this.CountDown);
+            if(Math.round(this.CountDown) == 0) {
+                this.StartLabel.string = "Go";
+                return;
+            }
+            this.StartLabel.string = Math.round(this.CountDown);
             return;
         }
             this.ScoreCount(dt);
-            this.SpawnDrop(dt);
+
         }
      },
-     getRandomSpawnLoc(){
-         let SpawnLoc = this.getRandomForSpawn(0,2);
-
-         switch (SpawnLoc) {
-            case 0:
-                this.PrevSpawnLoc = SpawnLoc;
-                return this.SpawnLoc_left;     
-            case 1:
-                this.PrevSpawnLoc = SpawnLoc;
-                return this.SpawnLoc_middle;
-            case 2:
-                this.PrevSpawnLoc = SpawnLoc;
-                return this.SpawnLoc_right;
-            default:
-                break;
-  
-        } 
-        
-     },
-
-     getRandomForSpawn(min, max) {
-         let SpawnLoc = Math.floor(Math.random() * (max - min + 1)) + min;
-
-        //  if(SpawnLoc+this.PrevSpawnLoc == 2)
-        //  {
-        //  return this.getRandomForSpawn(0,2);
-        //  }
-         if(this.ObjectCount == 0)
-         {
-             if(SpawnLoc == this.PrevSpawnLoc || SpawnLoc+this.PrevSpawnLoc == 2)
-             {
-                return this.getRandomForSpawn(0,2);
-             }
-         }
-         else
-         {
-             if(SpawnLoc+this.PrevSpawnLoc == 2)
-             {
-                 return this.getRandomForSpawn(0,2);
-             }
-         }
-        return SpawnLoc;
-    },
     getRandom(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
    },
+
+   DoCountDown() {
+
+   }
 
 });

@@ -33,7 +33,6 @@ cc.Class({
             XforCheck = Xorigin;
             IsWorkable = true;
         },this.node)
-        cc.log(this.GameComp);
 
          this.node.on('touchmove',function(event) {  
               var delta = event.touch.getDelta();

@@ -19,7 +19,7 @@ cc.Class({
     start () {
 
     },
-    GameStart() {
+    GameStartClicked() {
         this.maskLayer.active = true;
         this.maskLayer.opacity = 0;
         this.maskLayer.color = cc.Color.BLACK;
@@ -30,7 +30,24 @@ cc.Class({
                     cc.director.loadScene('Game');
                 })
             ));
-    }
+    },
+
+    MainClicked() {
+        this.maskLayer.active = true;
+        this.maskLayer.opacity = 0;
+        this.maskLayer.color = cc.Color.BLACK;
+        this.maskLayer.runAction(
+            cc.sequence(
+                cc.fadeIn(0.2),
+                cc.callFunc(()=> {
+                    cc.director.loadScene('Main');
+                })
+            ));
+    },
+
+    PauseClicked() {
+        
+    },
 
 
 

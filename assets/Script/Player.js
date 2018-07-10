@@ -8,12 +8,17 @@ cc.Class({
         isJumping:false,
         isOnPlatform:true,
         PlayerLoc:0,
+        Game: {
+            default:null,
+            type:cc.Node,
+        }
 
     },
 
     // LIFE-CYCLE CALLBACKS:
 
      onLoad () {
+         this.GameScript = this.Game.getComponent('Game');
          this.anim = this.getComponent(cc.Animation);
          this.Collision = cc.director.getCollisionManager();
          this.Collision.enabled = true;
@@ -75,7 +80,8 @@ cc.Class({
 
 
      update (dt) {
-
+        if(this.GameScript.IsCountDownOver)
+    {
         this.CheckGameOver();
         if(this.isJumping)
         {
@@ -84,6 +90,7 @@ cc.Class({
         else{
             this.isOnPlatform =false;
         }
+    }
 
 
      },

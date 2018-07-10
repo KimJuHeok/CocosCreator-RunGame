@@ -82,6 +82,9 @@
     "_components": [
       {
         "__id__": 22
+      },
+      {
+        "__id__": 23
       }
     ],
     "_prefab": null,
@@ -428,8 +431,8 @@
     "target": {
       "__id__": 7
     },
-    "component": "StartButton",
-    "handler": "GameStart",
+    "component": "Button",
+    "handler": "GameStartClicked",
     "customEventData": ""
   },
   {
@@ -524,7 +527,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "GameStartButton",
+    "_name": "OptionButton",
     "_objFlags": 0,
     "_parent": {
       "__id__": 2
@@ -663,7 +666,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "GameStartButton",
+    "_name": "StoreButton",
     "_objFlags": 0,
     "_parent": {
       "__id__": 2
@@ -893,5 +896,17 @@
     },
     "_fitWidth": true,
     "_fitHeight": true
+  },
+  {
+    "__type__": "ec280CMv3VGUbRcWGdFfNtg",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 2
+    },
+    "_enabled": true,
+    "maskLayer": {
+      "__id__": 12
+    }
   }
 ]
