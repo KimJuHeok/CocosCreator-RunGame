@@ -78,7 +78,7 @@ cc.Class({
             case 0:
             this.ObjectArr_X1[this.ObjectCount_X1].setPosition(this.getRandomSpawnLoc(),1920,0);
             this.ObjectArr_X1[this.ObjectCount_X1].active = true;
-            this.ObjectArr_X1[this.ObjectCount_X1].setSiblingIndex(1);
+            this.ObjectArr_X1[this.ObjectCount_X1].setSiblingIndex(0);
             this.ObjectCount_X1++;
             this.SpawnDelayTime = 0.28;
    
@@ -87,7 +87,7 @@ cc.Class({
             case 1:
             this.ObjectArr_X2[this.ObjectCount_X2].setPosition(this.getRandomSpawnLoc(),1920,0);
             this.ObjectArr_X2[this.ObjectCount_X2].active = true;
-            this.ObjectArr_X2[this.ObjectCount_X2].setSiblingIndex(1);
+            this.ObjectArr_X2[this.ObjectCount_X2].setSiblingIndex(0);
             this.ObjectCount_X2++;
             this.SpawnDelayTime = 0.58;
 
@@ -96,7 +96,7 @@ cc.Class({
             case 2:
             this.ObjectArr_X3[this.ObjectCount_X3].setPosition(this.getRandomSpawnLoc(),1920,0);
             this.ObjectArr_X3[this.ObjectCount_X3].active = true;
-            this.ObjectArr_X3[this.ObjectCount_X3].setSiblingIndex(1);
+            this.ObjectArr_X3[this.ObjectCount_X3].setSiblingIndex(0);
             this.ObjectCount_X3++;
             this.SpawnDelayTime = 0.88;
  
@@ -107,18 +107,6 @@ cc.Class({
     BeginSpawn() {
         switch(this.getRandom(1,2))
         {
-            // case 0:
-            // this.ObjectArr_X1[this.ObjectCount_X1].setPosition(this.getRandomSpawnLoc(),1920-70,0);
-            // this.ObjectArr_X1[this.ObjectCount_X1].active = true;
-            // this.ObjectArr_X1[this.ObjectCount_X1].setSiblingIndex(1);
-            // if(!this.IsGetFirstLoc) {
-            //     this.FirstLoc = this.ObjectArr_X1[this.ObjectCount_X1].x -10;
-            //     this.IsGetFirstLoc = true;
-            // }
-            // this.ObjectCount_X1++;
-            // this.SpawnDelayTime = 0.28;
-            // break;
-
             case 1:
             this.ObjectArr_X2[this.ObjectCount_X2].setPosition(this.getRandomSpawnLoc(),1920,0);
             this.ObjectArr_X2[this.ObjectCount_X2].active = true;

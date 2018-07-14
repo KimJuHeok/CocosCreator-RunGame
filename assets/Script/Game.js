@@ -14,6 +14,14 @@ cc.Class({
             default:null,
             type:cc.Label,
         },
+        BestScoreLabel: {
+            default:null,
+            type:cc.Label,
+        },
+        CoinAmoutLabel: {
+            default:null,
+            type:cc.Label,
+        },
         CurrentScore:0,
         ScoreArray:{
             default:[],
@@ -44,7 +52,16 @@ cc.Class({
         maskLayer:{
             default:null,
             type:cc.Node,
+        },
+        PauseLayer:{
+            default:null,
+            type:cc.Layout,
+        },
+        GlobalCoinAmount:{
+            default:0,
+            type:cc.integer,
         }
+        
 
  
     },
@@ -55,14 +72,11 @@ cc.Class({
          this.node.once("GameOver",function() {
              this.GameOver();
          },this);
-        cc.director.resume();
         this.Spawner = this.node.getComponent('Spawner');
         this.TouchMovement = this.node.parent.getComponent('TouchMovement');
         this.playerScript = this.Player.getComponent('Player');
         this.PrevSpawnLoc = 4;
         this.local = cc.sys.localStorage;
-        this.ScoreArrayInit();
-        this.FadeOutScene();
         
      },
      FadeOutScene(){
@@ -72,19 +86,41 @@ cc.Class({
     },
 
     start () {  //현재 스코어 초기화, 플랫폼 생성 실행,
-
+        this.GlobalCoinInit();
+        this.ScoreArrayInit();
+        this.BestScoreLabel.string = this.ScoreArray[0];
+        this.CoinAmoutLabel.string = this.GlobalCoinAmount;
+        this.FadeOutScene();
         this.CurrentScore = 0;
         this.Spawner.BeginSpawn();
         this.SetSpeedBackground(9);
         this.Spawner.SetSpeedPlatformArr(9);
         this.SetPlayerDefaultLoc();
     },
+
+    
+    PausePressed() {
+        cc.log("success");
+        this.GamePause();
+        this.PauseLayer.node.active = true;
+
+    },
     GamePause() {
+        this.IsPaused = true;
         this.SetSpeedBackground(0);
         this.Spawner.SetSpeedPlatformArr(0);
-        this.IsGameOver = true;
         this.TouchMovement.InputClear();
-        this.playerScript.node.stopAllActions();
+        this.playerScript.node.pauseAllActions();
+        this.playerScript.anim.pause();
+    },
+    GameResume() {
+        this.SetSpeedBackground(9);
+        this.Spawner.SetSpeedPlatformArr(9);
+        this.IsPaused = false;
+        this.playerScript.node.resumeAllActions();
+        this.PauseLayer.node.active = false;
+        this.playerScript.anim.resume();
+
     },
  
     SetPlayerDefaultLoc(){
@@ -103,7 +139,7 @@ cc.Class({
 
     },
     GameOver() {  //게임 오버 시 실행
-
+        this.IsGameOver = true;
         let Current = this.GameOverLayer.node.getChildByName("Current");
         Current.getComponent(cc.Label).string = this.CurrentScore;
         let Rank = [];
@@ -116,12 +152,23 @@ cc.Class({
         this.GamePause();
         this.ScoreAdd(this.CurrentScore);
         this.LocalStorageInit();
+        this.local.setItem("GlobalCoin",this.GlobalCoinAmount);
         this.GameOverLayer.node.active = true;
          for(let x = 0; x<this.ScoreArray.length;x++){
             Rank[x].getComponent(cc.Label).string = this.ScoreArray[x];
          }
 
     },
+    GlobalCoinInit() {
+        this.GlobalCoinAmount = 0;
+        this.GlobalCoinAmount = Number(this.local.getItem("GlobalCoin"));
+        cc.log("CoinAmount",this.GlobalCoinAmount);
+    },
+    AddCoin_Game(){
+        this.GlobalCoinAmount ++;
+        this.CoinAmoutLabel.string = this.GlobalCoinAmount;
+    },
+    
     ScoreArrayInit() {  //점수 배열에 local Storage에 있는 데이터들을 가져와 넣어줌
         for(let y=0; y<this.ScoreArray.length;y++){
             if(this.local.getItem(RankString["%d",y]) == null){
@@ -183,7 +230,7 @@ cc.Class({
     },
 
      update (dt) {
-         if(!this.IsGameOver)
+         if(!this.IsGameOver && !this.IsPaused)
         {
         this.Spawner.SpawnDrop(dt);
 

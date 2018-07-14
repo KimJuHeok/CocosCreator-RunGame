@@ -4,15 +4,26 @@ cc.Class({
 
     properties: {
         LocalSpeed:13,
+        IsX1:false,
 
     },
-
-    // onLoad () {},
-
-    start () {
-        //this.LocalSpeed = 9;
-
+    onLoad() {
+        let temp = this.getComponent(cc.Sprite);
+        if(temp.name == "Platform_X1<Sprite>")
+        {
+            this.IsX1 = true;
+        }
+        this.anim = this.getComponent(cc.Animation);
     },
+    onEnable() {
+        for(let i = 0; i < this.node.children.length; i++)
+        {
+            let temp = this.node.children[i].getComponent('Coin');
+            temp.RandomActive();
+        }
+        this.anim.play('Idle');
+    },
+
     SetSpeed(speed) {
         this.LocalSpeed = speed;
     },
@@ -27,4 +38,18 @@ cc.Class({
              this.node.active = false;
          }
      },
+
+     onCollisionEnter: function (other, self){
+         if(self.tag == 1)
+         {
+            this.anim.play('Half');
+         }
+         if(self.tag == 2)
+         {
+             this.anim.play('Pressed');
+         }
+
+
+   },
+
 });

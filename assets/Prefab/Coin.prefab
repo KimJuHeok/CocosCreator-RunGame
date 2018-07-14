@@ -10,7 +10,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "character",
+    "_name": "Coin",
     "_objFlags": 0,
     "_parent": null,
     "_children": [],
@@ -50,24 +50,24 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 61,
-      "height": 151
+      "width": 40,
+      "height": 40
     },
     "_rotationX": 0,
     "_rotationY": 0,
-    "_scaleX": 1,
-    "_scaleY": 1,
+    "_scaleX": 1.5,
+    "_scaleY": 1.5,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 5,
-      "y": -700
+      "x": 332,
+      "y": 480
     },
     "_skewX": 0,
     "_skewY": 0,
     "_localZOrder": 0,
     "_globalZOrder": 0,
     "_opacityModifyRGB": false,
-    "groupIndex": 3
+    "groupIndex": 5
   },
   {
     "__type__": "cc.Sprite",
@@ -78,7 +78,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "a612ecc6-ad45-4ff8-a7ae-d4e4dd1b166c"
+      "__uuid__": "28e22f7a-4dac-48be-8475-dec5ab4dcca0"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -93,22 +93,9 @@
     "_isTrimmedMode": true,
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_atlas": null
-  },
-  {
-    "__type__": "08bc1QUMelKQbNDxO+Vx4TL",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "jumpLoc": 210,
-    "DrawCollision": false,
-    "isJumping": false,
-    "isOnPlatform": true,
-    "PlayerLoc": 0,
-    "Game": null
+    "_atlas": {
+      "__uuid__": "39c6a203-eb14-4dcd-acac-98a7c64f21f2"
+    }
   },
   {
     "__type__": "cc.Animation",
@@ -119,20 +106,17 @@
     },
     "_enabled": true,
     "_defaultClip": {
-      "__uuid__": "8cd61f49-5b87-497e-b49b-430ae28f6be6"
+      "__uuid__": "8aee82a2-34b7-4fc3-97ef-6c72904ddacd"
     },
     "_clips": [
       {
-        "__uuid__": "8cd61f49-5b87-497e-b49b-430ae28f6be6"
-      },
-      {
-        "__uuid__": "95ab1895-da57-43c3-82ec-9687feab37fa"
+        "__uuid__": "8aee82a2-34b7-4fc3-97ef-6c72904ddacd"
       }
     ],
-    "playOnLoad": false
+    "playOnLoad": true
   },
   {
-    "__type__": "cc.BoxCollider",
+    "__type__": "cc.CircleCollider",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -142,14 +126,19 @@
     "tag": 0,
     "_offset": {
       "__type__": "cc.Vec2",
-      "x": 0.4,
-      "y": -62.6
+      "x": 0,
+      "y": 0
     },
-    "_size": {
-      "__type__": "cc.Size",
-      "width": 61.8,
-      "height": 23
-    }
+    "_radius": 20
+  },
+  {
+    "__type__": "662b48qP95EFqPNp5UZHO+t",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -157,9 +146,9 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "75734d1d-9495-4de4-a5ff-20eeedf86419"
     },
-    "fileId": "bbmR0XT5pJwpT+ox72QRT3",
+    "fileId": "55zSptbj1Mj7ORMNoLrdCS",
     "sync": false
   }
 ]

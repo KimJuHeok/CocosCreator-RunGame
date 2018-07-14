@@ -11,7 +11,8 @@ cc.Class({
         Game: {
             default:null,
             type:cc.Node,
-        }
+        },
+        CoinAmount:0,
 
     },
 
@@ -26,14 +27,17 @@ cc.Class({
 
          this.anim.on('finished',function(){
              this.isJumping = false;
-             this.anim.play("Player_idle_");
+             this.anim.play("Player_idle");
          },this);
 
 
      },
+     AddCoin() {
+         this.GameScript.AddCoin_Game();
+     },
 
      OnRight() {
-        this.anim.play("Player_jump_");
+        this.anim.play("Player_jump_Right");
         this.isJumping = true;
 
         let jumpRight = cc.jumpBy(0.12, cc.p(this.jumpLoc,0), 50,1);
@@ -42,7 +46,7 @@ cc.Class({
      },
 
      OnLeft() {
-        this.anim.play("Player_jump_");
+        this.anim.play("Player_jump_Left");
         this.isJumping = true;
         let jumpLeft = cc.jumpBy(0.12, cc.p(-this.jumpLoc,0), 50,1);
         this.node.runAction(jumpLeft);

@@ -10,17 +10,17 @@
     [
       true,
       null,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
       true
     ],
     [
       false,
       false,
-      true,
-      true
-    ],
-    [
-      true,
-      true,
       false,
       null,
       true
@@ -29,9 +29,19 @@
       false,
       true,
       false,
+      false,
+      null,
+      true
+    ],
+    [
+      false,
+      false,
+      true,
+      false,
       false
     ],
     [
+      false,
       false,
       false,
       true,
@@ -49,7 +59,8 @@
     "Platform",
     "Check",
     "Player",
-    "BackGround"
+    "BackGround",
+    "Coin"
   ],
   "simulator-orientation": false,
   "simulator-resolution": {
