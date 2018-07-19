@@ -4,15 +4,10 @@ cc.Class({
 
     properties: {
         LocalSpeed:13,
-        IsX1:false,
 
     },
     onLoad() {
-        let temp = this.getComponent(cc.Sprite);
-        if(temp.name == "Platform_X1<Sprite>")
-        {
-            this.IsX1 = true;
-        }
+        
         this.anim = this.getComponent(cc.Animation);
     },
     onEnable() {

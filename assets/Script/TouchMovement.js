@@ -28,6 +28,7 @@ cc.Class({
         var IsWorkable = false; //터치 중인지 체크
         this.GameComp = this.Game.getComponent('Game');
         this.playerScript = this.Player.getComponent('Player');
+        
         this.node.on('touchstart',function(touch){
             Xorigin = touch.getLocation().x;
             XforCheck = Xorigin;
@@ -77,17 +78,15 @@ cc.Class({
              {
                 if(!this.playerScript.GetIsJumping())
                 {
-                switch(this.InputArray[i])
+                switch(this.InputArray[0])
                  {
                  case this.Right:
                  this.playerScript.OnRight();
-                 this.InputArray.splice(i,1);
-                 this.playerScript.CheckGameOver();
+                 this.InputArray.splice(0,1);
                  break;
                  case this.Left:
                  this.playerScript.OnLeft();
-                 this.InputArray.splice(i,1);
-                 this.playerScript.CheckGameOver();
+                 this.InputArray.splice(0,1);
                  break;
                  }
                 }

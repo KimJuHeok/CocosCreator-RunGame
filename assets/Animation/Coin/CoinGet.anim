@@ -1,0 +1,49 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "CoinGet",
+  "_objFlags": 0,
+  "_rawFiles": null,
+  "_duration": 0.15,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": "0",
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "5a9c4c09-c208-47a9-933a-1a57debf1d4c"
+            }
+          },
+          {
+            "frame": 0.03333333333333333,
+            "value": {
+              "__uuid__": "82c5d2c2-2c5a-4b44-8ab3-102a81aefb54"
+            }
+          },
+          {
+            "frame": 0.06666666666666667,
+            "value": {
+              "__uuid__": "3d423367-9ef9-4cc1-90b6-ec4a9552a746"
+            }
+          },
+          {
+            "frame": 0.1,
+            "value": {
+              "__uuid__": "5a251763-cf90-40da-9210-9fbc4dd67461"
+            }
+          },
+          {
+            "frame": 0.13333333333333333,
+            "value": {
+              "__uuid__": "4738c716-091a-49c2-af03-ac7db7329424"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

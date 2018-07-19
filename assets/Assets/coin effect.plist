@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>coin effect_1.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{144,97}</string>
+                <key>spriteSourceSize</key>
+                <string>{144,97}</string>
+                <key>textureRect</key>
+                <string>{{104,290},{144,97}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>coin effect_2.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{144,97}</string>
+                <key>spriteSourceSize</key>
+                <string>{144,97}</string>
+                <key>textureRect</key>
+                <string>{{104,290},{144,97}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>coin effect_3.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{194,101}</string>
+                <key>spriteSourceSize</key>
+                <string>{194,101}</string>
+                <key>textureRect</key>
+                <string>{{1,290},{194,101}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+            <key>coin effect_4.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{208,148}</string>
+                <key>spriteSourceSize</key>
+                <string>{208,148}</string>
+                <key>textureRect</key>
+                <string>{{1,1},{208,148}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>coin effect_5.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{194,137}</string>
+                <key>spriteSourceSize</key>
+                <string>{194,137}</string>
+                <key>textureRect</key>
+                <string>{{1,151},{194,137}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>3</integer>
+            <key>pixelFormat</key>
+            <string>RGBA8888</string>
+            <key>premultiplyAlpha</key>
+            <false/>
+            <key>realTextureFileName</key>
+            <string>coin effect.png</string>
+            <key>size</key>
+            <string>{210,485}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:7d736d4c0e665a291b7f5e2ab69ae316:925d0b0f3ad57f20914e709c464a8677:3af9c37ac06e20b20b8011b04708266e$</string>
+            <key>textureFileName</key>
+            <string>coin effect.png</string>
+        </dict>
+    </dict>
+</plist>
