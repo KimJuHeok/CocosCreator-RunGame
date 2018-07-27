@@ -3,7 +3,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        LocalSpeed:13,
+        LocalSpeed:9,
 
     },
     onLoad() {

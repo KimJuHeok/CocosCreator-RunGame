@@ -3,10 +3,6 @@ cc.Class({
 
     
     properties: {
-        Player: {
-            default:null,
-            type:cc.Node,
-        },
         InputArray: {
             default:[],
             type:cc.Integer,
@@ -19,15 +15,16 @@ cc.Class({
         },
         
     },
+    
 
     // LIFE-CYCLE CALLBACKS:
 
      onLoad () {
+        this.GetCharacter();
         var Xorigin;
         var XforCheck;
         var IsWorkable = false; //터치 중인지 체크
         this.GameComp = this.Game.getComponent('Game');
-        this.playerScript = this.Player.getComponent('Player');
         
         this.node.on('touchstart',function(touch){
             Xorigin = touch.getLocation().x;
@@ -71,6 +68,27 @@ cc.Class({
          },this)
 
      },
+     GetCharacter(){
+        this.local = cc.sys.localStorage;
+        let CurrCharacter = Number(this.local.getItem("CurrCharacter"));
+        switch(CurrCharacter)
+        {
+            case 1:
+            this.Player = cc.find("Canvas/Root/CharacterManager/Character1");
+            this.playerScript = this.Player.getComponent('Player');
+            break;
+            case 2:
+            this.Player = cc.find("Canvas/Root/CharacterManager/Character2");
+            this.playerScript = this.Player.getComponent('Player');
+            break;
+            case 3:
+            break;
+            default:
+            this.Player = cc.find("Canvas/Root/CharacterManager/Character1");
+            this.playerScript = this.Player.getComponent('Player');
+            break;
+        }
+    },
 
      update (dt) {
 

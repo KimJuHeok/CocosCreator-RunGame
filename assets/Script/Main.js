@@ -7,13 +7,15 @@ cc.Class({
         maskLayer:{
             default:null,
             type:cc.Node,
-        }
+        },
+
     },
 
     // LIFE-CYCLE CALLBACKS:
 
-     onLoad () {},
+     onLoad () {
 
+     },
      FadeOutScene(){
         this.maskLayer.active = true;
         this.maskLayer.color = cc.Color.BLACK;

@@ -22,6 +22,10 @@ cc.Class({
         FirstLoc:0,
         BeginPlatformLoc:-900,
         deltaTime_:0,
+        DelayTime_X1:0.28,
+        DelayTime_X2:0.58,
+        DelayTime_X3:0.88,
+        
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -80,7 +84,7 @@ cc.Class({
             this.ObjectArr_X1[this.ObjectCount_X1].active = true;
             this.ObjectArr_X1[this.ObjectCount_X1].setSiblingIndex(0);
             this.ObjectCount_X1++;
-            this.SpawnDelayTime = 0.28;
+            this.SpawnDelayTime = this.DelayTime_X1;
    
             break;
 
@@ -89,7 +93,7 @@ cc.Class({
             this.ObjectArr_X2[this.ObjectCount_X2].active = true;
             this.ObjectArr_X2[this.ObjectCount_X2].setSiblingIndex(0);
             this.ObjectCount_X2++;
-            this.SpawnDelayTime = 0.58;
+            this.SpawnDelayTime = this.DelayTime_X2;
 
             break;
 
@@ -98,12 +102,23 @@ cc.Class({
             this.ObjectArr_X3[this.ObjectCount_X3].active = true;
             this.ObjectArr_X3[this.ObjectCount_X3].setSiblingIndex(0);
             this.ObjectCount_X3++;
-            this.SpawnDelayTime = 0.88;
+            this.SpawnDelayTime = this.DelayTime_X3;
  
             break;
 
         }
     },
+    SetDefaultTime() {
+        this.DelayTime_X1 = 0.28;
+        this.DelayTime_X2 = 0.58;
+        this.DelayTime_X3 = 0.88;
+    },
+    SetFeverTime() {
+        this.DelayTime_X1 = 0.18;
+        this.DelayTime_X2 = 0.35;
+        this.DelayTime_X3 = 0.55;
+    },
+
     BeginSpawn() {
         switch(this.getRandom(1,2))
         {

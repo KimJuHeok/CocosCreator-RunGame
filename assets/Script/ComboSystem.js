@@ -21,8 +21,8 @@ cc.Class({
 
     start () {
         this.EffectArrCount = 0;
-        this.PerfectCounter = 1;
-        for(let i = 0; i<10; i++)
+        this.PerfectCounter = 0;
+        for(let i = 0; i<30; i++)
         {
             this.EffectArr[i] = cc.instantiate(this.PerfectEffect);
             this.EffectScriptArr[i] = this.EffectArr[i].getComponent('Perfect');
@@ -35,18 +35,25 @@ cc.Class({
         {
             this.EffectArrCount = 0;
         }
-        this.EffectScriptArr[this.EffectArrCount].ShowPerfect(this.PerfectCounter);
         this.PerfectCounter++;
+        this.EffectScriptArr[this.EffectArrCount].ShowPerfect(this.PerfectCounter);
         this.EffectArrCount++;
+        if(this.PerfectCounter == 10)
+        {
+            this.OnFever();
+        }
     },
     failPerfect() {
-        if(this.EffectArrCoount < 10)
+        if(this.EffectArrCount < 10)
         {
             this.EffectArrCount = 0;
         }
         this.EffectScriptArr[this.EffectArrCount].FailPerfect();
-        this.PerfectCounter = 1;
+        this.PerfectCounter = 0;
         this.EffectArrCount++;
+    },
+    OnFever() {
+        this.node.parent.getComponent("Player").OnFever();
     },
 
      update (dt) {

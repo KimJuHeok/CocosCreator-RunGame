@@ -4,7 +4,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        LocalSpeed:11,
+        LocalSpeed:12,
     },
 
     // LIFE-CYCLE CALLBACKS:

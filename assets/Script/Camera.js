@@ -4,17 +4,30 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        target: {
-            default:null,
-            type:cc.Node
-        }
     },
-
-    // LIFE-CYCLE CALLBACKS:
 
     // onLoad () {},
 
     onLoad () {
+        this.local = cc.sys.localStorage;
+        let CurrCharacter = Number(this.local.getItem("CurrCharacter"));
+        switch(CurrCharacter)
+        {
+            case 1:
+            this.target = cc.find("CharacterManager/Character1",this.node);
+            break;
+            case 2:
+            this.target = cc.find("CharacterManager/Character2",this.node);
+            break;
+            case 3:
+            break;
+            default:
+            this.target = cc.find("CharacterManager/Character1",this.node);
+            break;
+
+        }
+
+
         if(!this.target)
         {
             return;

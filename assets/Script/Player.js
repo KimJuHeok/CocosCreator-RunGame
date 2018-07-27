@@ -13,6 +13,7 @@ cc.Class({
             type:cc.Node,
         },
         CoinAmount:0,
+        IsOnFever:false,
         IsOnPerfectPoint:false,
 
     },
@@ -32,11 +33,14 @@ cc.Class({
          this.Collision.enabledDebugDraw = this.DrawCollision;
 
          this.anim.on('finished',function(){
+             if(this.GameScript.IsOnFeverMode == false)
+             {
+                this.CheckIsPerfect();
+             }
              this.isJumping = false;
              this.anim.play("Player_idle");
              this.step.active = true;
              this.stepAnim.play('Player_stepped');
-             this.CheckIsPerfect();
          },this);
          this.stepAnim.on('finished',function(){
              this.step.active = false;
@@ -66,6 +70,9 @@ cc.Class({
         let jumpLeft = cc.jumpBy(0.12, cc.p(-this.jumpLoc,0), 50,1);
         this.node.runAction(jumpLeft);
      },
+     OnFever(){
+         this.GameScript.SetFeverMode();
+     },
      GetIsJumping() {
          return this.isJumping;
      },
@@ -82,6 +89,7 @@ cc.Class({
              this.CoinGet.active = true;
              this.CoinGetAnim.play("CoinGet");
          }
+
          if(other.tag == 2 || other.tag == 1)
          {
             this.IsOnPerfectPoint = true;
@@ -117,7 +125,11 @@ cc.Class({
     lateUpdate() {
         if(this.GameScript.IsCountDownOver)
         {
+            if(this.GameScript.IsOnFeverMode == false)
+            {
             this.CheckGameOver();
+            }
+
             if(this.isJumping)
             {
             this.isOnPlatform = true;
@@ -127,7 +139,6 @@ cc.Class({
             this.isOnPlatform = false;
             }
         }
-        cc.log(this.IsOnPerfectPoint);
 
     },
 });

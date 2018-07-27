@@ -31,10 +31,10 @@ cc.Class({
             default:null,
             type:cc.Layout,
         },
-        Player:{
-            default:null,
-            type:cc.Node,
-        },
+        // Player:{
+        //     default:null,
+        //     type:cc.Node,
+        // },
         Background:{  //1,2번째 인자 : background, 2,3번째 인자 : background_side
             default:[],
             type:cc.Node,
@@ -48,7 +48,9 @@ cc.Class({
         SpawnLoc_right:240,
         IsCountDownOver:false,
         IsGameOver:false,
+        IsOnFeverMode:false,
         CountDown:5.3,
+        Counter:0,
         maskLayer:{
             default:null,
             type:cc.Node,
@@ -74,7 +76,6 @@ cc.Class({
          },this);
         this.Spawner = this.node.getComponent('Spawner');
         this.TouchMovement = this.node.parent.getComponent('TouchMovement');
-        this.playerScript = this.Player.getComponent('Player');
         this.PrevSpawnLoc = 4;
         this.local = cc.sys.localStorage;
         
@@ -84,8 +85,30 @@ cc.Class({
         this.maskLayer.color = cc.Color.BLACK;
         this.maskLayer.runAction(cc.fadeOut(0.2));
     },
+    GetCharacter(){
+        this.local = cc.sys.localStorage;
+        let CurrCharacter = Number(this.local.getItem("CurrCharacter"));
+        switch(CurrCharacter)
+        {
+            case 1:
+            this.Player = cc.find("CharacterManager/Character1",this.node);
+            this.playerScript = this.Player.getComponent('Player');
+            break;
+            case 2:
+            this.Player = cc.find("CharacterManager/Character2",this.node);
+            this.playerScript = this.Player.getComponent('Player');
+            break;
+            case 3:
+            break;
+            default:
+            this.Player = cc.find("CharacterManager/Character1",this.node);
+            this.playerScript = this.Player.getComponent('Player');
+            break;
+        }
+    },
 
     start () {  //현재 스코어 초기화, 플랫폼 생성 실행,
+        this.GetCharacter();
         this.GlobalCoinInit();
         this.ScoreArrayInit();
         this.BestScoreLabel.string = this.ScoreArray[0];
@@ -100,7 +123,6 @@ cc.Class({
 
     
     PausePressed() {
-        cc.log("success");
         this.GamePause();
         this.PauseLayer.node.active = true;
 
@@ -114,9 +136,9 @@ cc.Class({
         this.playerScript.anim.pause();
     },
     GameResume() {
+        this.IsPaused = false;
         this.SetSpeedBackground(9);
         this.Spawner.SetSpeedPlatformArr(9);
-        this.IsPaused = false;
         this.playerScript.node.resumeAllActions();
         this.PauseLayer.node.active = false;
         this.playerScript.anim.resume();
@@ -159,10 +181,21 @@ cc.Class({
          }
 
     },
+    SetFeverMode() {
+        this.Spawner.SetSpeedPlatformArr(14);
+        this.SetSpeedBackground(14);
+        this.Spawner.SetFeverTime();
+        this.IsOnFeverMode = true;
+    },
+    SetDefaultMode() {
+        this.Spawner.SetSpeedPlatformArr(9);
+        this.SetSpeedBackground(9);
+        this.Spawner.SetDefaultTime();
+        this.IsOnFeverMode = false;
+    },
     GlobalCoinInit() {
         this.GlobalCoinAmount = 0;
         this.GlobalCoinAmount = Number(this.local.getItem("GlobalCoin"));
-        cc.log("CoinAmount",this.GlobalCoinAmount);
     },
     AddCoin_Game(){
         this.GlobalCoinAmount ++;
@@ -248,6 +281,16 @@ cc.Class({
             return;
         }
             this.ScoreCount(dt);
+
+        if(this.IsOnFeverMode == true)
+        {
+            this.Counter += dt;
+            if(this.Counter >10)
+            {
+                this.SetDefaultMode();
+                this.Counter = 0;
+            }
+        }
 
         }
      },

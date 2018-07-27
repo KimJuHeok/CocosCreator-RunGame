@@ -23,15 +23,17 @@ cc.Class({
 
 
     ShowPerfect(number) {
+        this.animation.play("ShowPerfect");
         this.node.active = true;
         this.node.setPosition(0,104);
         this.node.getChildByName("Combo").getComponent(cc.Label).string = number;
-        this.animation.play("ShowPerfect");
+
     },
     FailPerfect(){
-        this.node.setPosition(0,104);
         this.animation.play("FailPerfect");
         this.node.active = true;
+        this.node.setPosition(0,104);
+
     }
 
     // update (dt) {},
